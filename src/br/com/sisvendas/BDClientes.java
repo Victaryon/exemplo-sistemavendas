@@ -32,11 +32,14 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "BDClientes.findByTelefone", query = "SELECT b FROM BDClientes b WHERE b.telefone = :telefone")})
 public class BDClientes implements Serializable {
 
+    @OneToMany(mappedBy = "codigoCliente")
+    private Collection<BDVendas> bDVendasCollection;
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @SequenceGenerator(name="seq_clientes", sequenceName="seq_clientes") //Adiciona a sequencia do BD para criar ->
-    @GeneratedValue(generator="seq_clientes", strategy=GenerationType.AUTO)// o incremento das primary keys
+    @GeneratedValue(generator="seq_clientes", strategy=GenerationType.TABLE)// o incremento das primary keys
     @Basic(optional = false)
     @Column(name = "CODIGO_CLIENTE")
     private BigDecimal codigoCliente; //Não recomendavel usar chave primaria como tipo primitivo
@@ -170,7 +173,16 @@ public class BDClientes implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.sisvendas.BDClientes[ codigoCliente=" + codigoCliente + " ]";
+        return nome;
+    }
+
+    @XmlTransient
+    public Collection<BDVendas> getBDVendasCollection() {
+        return bDVendasCollection;
+    }
+
+    public void setBDVendasCollection(Collection<BDVendas> bDVendasCollection) {
+        this.bDVendasCollection = bDVendasCollection;
     }
  
 }

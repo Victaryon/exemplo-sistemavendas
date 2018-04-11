@@ -45,5 +45,6 @@ Contributor(s):
     <property name="hibernate.connection.url">jdbc:oracle:thin:@localhost:1521:XE</property>
     <property name="hibernate.connection.username">projetovendas</property>
     <property name="hibernate.connection.password">59618991</property>
+    <property name="hibernate.id.new_generator_mappings">false</property> <!-- evita gerar chaves diferentes entre aplicação e BD-->
   </session-factory>
 </hibernate-configuration>

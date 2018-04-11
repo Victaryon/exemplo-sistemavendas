@@ -71,7 +71,7 @@ public class FXMLCadastroProdutoController implements Initializable {
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        carregarComboFornecedores();
+        carregarFornecedoresBox();
         carregarTabelaProduto();  
         btnSalvarProduto.setDisable(true);
     } 
@@ -97,7 +97,7 @@ public class FXMLCadastroProdutoController implements Initializable {
             String fornecNome= selecionarItemComboBoxProduto();
             BDFornecedores f = null;
             //Obter o objeto Fornecedor correto da lista, atraves da string do nome
-            for( BDFornecedores t: carregarComboFornecedores()){
+            for( BDFornecedores t: carregarFornecedoresBox()){
                 if(t.getNome().equals(fornecNome)){
                     f=t;
                 }
@@ -143,7 +143,7 @@ public class FXMLCadastroProdutoController implements Initializable {
         String fornecNome= selecionarItemComboBoxProduto();
         BDFornecedores f = null;
         //Obter o objeto Fornecedor correto da lista, atraves da string do nome
-        for( BDFornecedores t: carregarComboFornecedores()){
+        for( BDFornecedores t: carregarFornecedoresBox()){
             if(t.getNome().equals(fornecNome)){
                f=t;
             }
@@ -186,7 +186,7 @@ public class FXMLCadastroProdutoController implements Initializable {
         return produtoSelecionado;
     }
     
-    public List<BDFornecedores> carregarComboFornecedores(){
+    public List<BDFornecedores> carregarFornecedoresBox(){
         TypedQuery<BDFornecedores> query = em.createQuery("SELECT b FROM BDFornecedores b",BDFornecedores.class);
         List<BDFornecedores> fornecedores= query.getResultList();
         /******************************Gambiarra para não dar ERRO!!!****************************************/
