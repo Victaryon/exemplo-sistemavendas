@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.sisvendas.FXMLFormularioPrincipalController">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu fx:id="mnuOpcoes" mnemonicParsing="false" text="Opções">
+            <items>
+                  <MenuItem mnemonicParsing="false" onAction="#mnuSobreActionPerformed" text="Sobre o Sistema" />
+              <MenuItem mnemonicParsing="false" onAction="#mnuSairActionPerformed" text="Sair" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Cadastros">
+            <items>
+                  <MenuItem mnemonicParsing="false" onAction="#mnuCadastrarCliente" text="Clientes" />
+                  <MenuItem mnemonicParsing="false" onAction="#mnuCadastrarProduto" text="Produtos" />
+              <MenuItem mnemonicParsing="false" onAction="#mnuCadastrarFornecedor" text="Fornecedores" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Vendas">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#mnuVendasRegistar" text="Registrar" />
+                  <MenuItem mnemonicParsing="false" onAction="#mnuVendasConsultar" text="Consultar" />
+            </items>
+          </Menu>
+            <Menu fx:id="mnuRelatorios" mnemonicParsing="false" text="Relatórios">
+              <items>
+                <MenuItem fx:id="mnuRelatorioClientes" mnemonicParsing="false" text="Clientes" />
+                  <MenuItem fx:id="mnuRelatorioProdutos" mnemonicParsing="false" text="Produtos" />
+                  <MenuItem fx:id="mnuRelatorioFornecedores" mnemonicParsing="false" text="Fornecedores" />
+                  <MenuItem fx:id="mnuRelatorioVendas" mnemonicParsing="false" text="Vendas" />
+              </items>
+            </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+</BorderPane>
