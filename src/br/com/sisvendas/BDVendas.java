@@ -38,7 +38,7 @@ public class BDVendas implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @SequenceGenerator(name="seq_vendas", sequenceName="seq_vendas", allocationSize=1) //Adiciona a sequencia do BD para criar ->
-    @GeneratedValue(generator="seq_vendas", strategy=GenerationType.SEQUENCE)// o incremento das primary keys
+    @GeneratedValue(generator="seq_vendas", strategy=GenerationType.AUTO)// o incremento das primary keys
     @Basic(optional = false)
     @Column(name = "CODIGO_VENDA")
     private BigDecimal codigoVenda;
@@ -88,20 +88,20 @@ public class BDVendas implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        //hash += (codigoVenda != null ? codigoVenda.hashCode() : 0);
+        hash += (codigoVenda != null ? codigoVenda.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        /*if (!(object instanceof BDVendas)) {
+        if (!(object instanceof BDVendas)) {
             return false;
         }
         BDVendas other = (BDVendas) object;
         if ((this.codigoVenda == null && other.codigoVenda != null) || (this.codigoVenda != null && !this.codigoVenda.equals(other.codigoVenda))) {
             return false;
-        }*/
+        }
         return true;
     }
 

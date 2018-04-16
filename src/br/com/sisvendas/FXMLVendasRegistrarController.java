@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,12 +22,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Callback;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import oracle.jrockit.jfr.events.Bits;
 
 /**
  * FXML Controller class
@@ -43,7 +48,7 @@ public class FXMLVendasRegistrarController implements Initializable {
     private TableColumn<BDProdutos, String> tabelaVendaProduto;
     
     @FXML
-    private TableColumn<BDProdutos, Integer> tabelaVendaQuantidade;
+    private TableColumn<BDVendaitem, Integer> tabelaVendaQuantidade;
     
     @FXML
     private TableColumn<BDProdutos, Float> tabelaVendaValor;
@@ -80,6 +85,7 @@ public class FXMLVendasRegistrarController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         carregarClienteBox();
         carregarProdutoBox();
+        
         btnVendaFinalizar.setDisable(true);
         
     } 
@@ -104,16 +110,10 @@ public class FXMLVendasRegistrarController implements Initializable {
         String data1= "10/01/2017";
         SimpleDateFormat dt= new SimpleDateFormat("dd/mm/yyyy");
         Date data= dt.parse(data1);
-        BDProdutos produto=null;
+        BDProdutos produto=acharProduto();
         BDClientes cliente= null;
-        String produtoNome= comboBxVendaProduto.getSelectionModel().getSelectedItem();
-        String clienteNome= comboBxVendaCliente.getSelectionModel().getSelectedItem();
-        
-        for( int i=0;i<carregarProdutoBox().size();i++){
-                if(carregarProdutoBox().get(i).getNome().endsWith(produtoNome)==true){
-                    produto=carregarProdutoBox().get(i);
-                }
-        }
+        String clienteNome= comboBxVendaCliente.getSelectionModel().getSelectedItem(); //o do produto está no metodo acharProduto()
+          
         for( BDClientes t: carregarClienteBox()){
                 if(t.getNome().equals(clienteNome)){
                     cliente=t;
@@ -134,6 +134,18 @@ public class FXMLVendasRegistrarController implements Initializable {
         btnVendaFinalizar.setDisable(false);
         finalizar=false;
         System.out.println("finalizar: "+finalizar);
+        carregarTabelaVenda();
+    }
+    
+    public BDProdutos acharProduto(){ //acha o objeto produto pela String do seu nome
+        String produtoNome= comboBxVendaProduto.getSelectionModel().getSelectedItem();
+        BDProdutos produto= null;
+        for( int i=0;i<carregarProdutoBox().size();i++){
+                if(carregarProdutoBox().get(i).getNome().endsWith(produtoNome)==true){
+                    produto=carregarProdutoBox().get(i);
+                }
+        }
+        return produto;
     }
     
     public List<BDProdutos> carregarProdutoBox(){
@@ -162,6 +174,28 @@ public class FXMLVendasRegistrarController implements Initializable {
         ObservableList<String> oblCliente= FXCollections.observableArrayList(minhaLista);
         comboBxVendaCliente.setItems(oblCliente);  
         return fornecedores;
+    }
+    
+    public void carregarTabelaVenda(){
+        tabelaVenda.getColumns().get(0).setVisible(false); //resolve problema de atualizar a tabela na opção -
+        tabelaVenda.getColumns().get(0).setVisible(true);//- alterar 
+        tabelaVendaProduto.setCellValueFactory(new PropertyValueFactory<BDProdutos,String>("nome"));
+        tabelaVendaQuantidade.setCellValueFactory(new PropertyValueFactory<BDVendaitem,Integer>("quantidade"));
+        tabelaVendaValor.setCellValueFactory(new PropertyValueFactory<BDProdutos,Float>("valor"));
+        
+        BDProdutos listProdutos= (BDProdutos) em.find(BDProdutos.class, acharProduto().getCodigoProduto());
+        ObservableList<BDProdutos> oblProdutos= FXCollections.observableArrayList(listProdutos);
+        tabelaVenda.setItems(oblProdutos);
+        BDVendaitem item= null;
+        List<BDVendaitem> listVendaItem= (List<BDVendaitem>) listProdutos.getVendaitemCollection();
+        for(int i=0;i<listVendaItem.size();i++){
+            if(listVendaItem.get(i).getCodigoVenda() == venda){
+                item= listVendaItem.get(i);
+            }  
+        }
+        ObservableList<BDVendaitem> oblQuantidade= FXCollections.observableArrayList(item);
+        System.out.println(item.getQuantidade());
+        tabelaVendaQuantidade.setCellValueFactory((Callback<TableColumn.CellDataFeatures<BDVendaitem, Integer>, ObservableValue<Integer>>) oblQuantidade);
     }
 
 }

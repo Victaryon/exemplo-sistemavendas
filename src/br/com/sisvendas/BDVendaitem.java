@@ -111,7 +111,7 @@ public class BDVendaitem implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.sisvendas.BDVendaitem[ contador=" + contador + " ]";
+        return String.valueOf(quantidade);
     }
  
 }

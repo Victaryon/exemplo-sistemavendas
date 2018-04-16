@@ -210,8 +210,8 @@ public class FXMLCadastroProdutoController implements Initializable {
         
         TypedQuery<BDProdutos> query= em.createQuery("SELECT b FROM BDProdutos b",BDProdutos.class);
         List<BDProdutos> listProdutos= query.getResultList();
-        ObservableList<BDProdutos> oblClientes= FXCollections.observableArrayList(listProdutos);
-        tabelaProduto.setItems(oblClientes);
+        ObservableList<BDProdutos> oblProdutos= FXCollections.observableArrayList(listProdutos);
+        tabelaProduto.setItems(oblProdutos);
     }
     
     public void pesquisarNomeProduto(String nome){
