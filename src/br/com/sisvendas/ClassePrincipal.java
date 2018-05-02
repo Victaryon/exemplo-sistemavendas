@@ -1,42 +1,22 @@
 package br.com.sisvendas;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
+import static br.com.sisvendas.FabricaEntityManager.getEmf;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.sql.SQLException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import org.eclipse.persistence.exceptions.ExceptionHandler;
 
-/**
- *
- * @author julia
- */
 public class ClassePrincipal extends Application {
     
     private Stage primaryStage;
     public static BorderPane mainLayout;
-    
-    /*
-    @Override
-    public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLFormularioPrincipal.fxml"));
-        
-        Scene scene = new Scene(root);
-        stage.setTitle("Sistema de Vendas");
-        stage.setScene(scene);
-        stage.show();
-    }
-    */
     
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -45,15 +25,15 @@ public class ClassePrincipal extends Application {
         
         showFormularioPrincipal2();
     }
-    
-    
-    public void showFormularioPrincipal2() throws IOException{
+   
+    public Scene showFormularioPrincipal2() throws IOException{
         FXMLLoader loader= new FXMLLoader();
         loader.setLocation(ClassePrincipal.class.getResource("FXMLFormularioPrincipal2.fxml"));
         mainLayout= loader.load();
         Scene scene= new Scene(mainLayout);
         primaryStage.setScene(scene);
         primaryStage.show();
+        return scene;
     }
     
     public static void showCadastrarClientes() throws IOException{
@@ -91,9 +71,20 @@ public class ClassePrincipal extends Application {
         mainLayout.setCenter(mainItens);
     }
     
+    public static void showRelatorioClientes() throws IOException{
+        FXMLLoader loader= new FXMLLoader();
+        loader.setLocation(ClassePrincipal.class.getResource("/report/FXMLRelatorioCliente.fxml"));
+        BorderPane mainItens= loader.load();
+        mainLayout.setCenter(mainItens);
+    }
     
     public static void main(String[] args) {
-        launch(args);
+        try{
+            launch(args);
+        }
+        finally{
+            getEmf().close();//Encerra as conexões antes de fechar o programa
+        } 
     }
     
 }

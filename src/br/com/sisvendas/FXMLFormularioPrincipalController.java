@@ -7,9 +7,22 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import static br.com.sisvendas.FabricaEntityManager.*;
+import java.net.URL;
+import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
+import javax.persistence.EntityManager;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
+import org.hibernate.internal.SessionImpl;
 
 
 public class FXMLFormularioPrincipalController {
+    EntityManager em= createEm();
     
     @FXML
     private Menu mnuOpcoes;
@@ -21,8 +34,6 @@ public class FXMLFormularioPrincipalController {
     private MenuItem mnuRelatorioProdutos;
     @FXML
     private MenuItem mnuRelatorioFornecedores;
-    @FXML
-    private MenuItem mnuRelatorioVendas;
    
     
     @FXML
@@ -30,7 +41,7 @@ public class FXMLFormularioPrincipalController {
         Alert alert= new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Informação");
         //alert.setHeaderText("Cabeçalho");
-        alert.setContentText("Sistem de Vendas - Juliano \nTelefone:(77)99819-3781");
+        alert.setContentText("Sistem de Vendas - Juliano \nTelefone:(99)9999-9999");
         alert.show();
     }
 
@@ -40,17 +51,6 @@ public class FXMLFormularioPrincipalController {
     }
     
     public void sair(){
-        //Tentativa de rollback ao fechar o progrma -> falhou
-        /*try{
-            createEm().getTransaction().rollback();
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-        finally{
-            getEmf().close();
-            System.exit(0);
-        }*/
         getEmf().close();
         System.exit(0);
     }
@@ -83,7 +83,36 @@ public class FXMLFormularioPrincipalController {
     private void mnuVendasConsultar(ActionEvent event) throws IOException {
         principal.showVendasConsultar();
     }
-    
-    
-    
+
+    @FXML
+    private void mnuRelatorioClientes(ActionEvent event) throws IOException {
+        principal.showRelatorioClientes();
+    }
+
+    @FXML
+    private void mnuProdutosRelatorio(ActionEvent event) throws JRException{
+        em.getTransaction().begin();
+        Connection connection = em.unwrap(SessionImpl.class).connection(); //necessario usar o método connection 
+        Map parametros = new HashMap();
+        URL url= getClass().getResource("/report/relatorioProdutos.jasper");
+        JasperReport jasperReport= (JasperReport) JRLoader.loadObject(url);
+        JasperPrint jasperPrint= JasperFillManager.fillReport(jasperReport,parametros,connection);
+        JasperViewer jasperViwer= new JasperViewer(jasperPrint, false); //impede q o programa feche
+        jasperViwer.setVisible(true); //deixa a janela aberta
+        em.getTransaction().commit();
+    }
+
+    @FXML
+    private void mnuFornecedoresRelatorio(ActionEvent event) throws JRException {
+        em.getTransaction().begin();
+        Connection connection = em.unwrap(SessionImpl.class).connection(); //necessario usar o método connection 
+        Map parametros = new HashMap();
+        URL url= getClass().getResource("/report/relatorioFornecedores.jasper");
+        JasperReport jasperReport= (JasperReport) JRLoader.loadObject(url);
+        JasperPrint jasperPrint= JasperFillManager.fillReport(jasperReport,parametros,connection);
+        JasperViewer jasperViwer= new JasperViewer(jasperPrint, false); //impede q o programa feche
+        jasperViwer.setVisible(true); //deixa a janela aberta
+        em.getTransaction().commit();
+    }
+      
 }

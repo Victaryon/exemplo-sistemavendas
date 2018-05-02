@@ -43,7 +43,7 @@ public class BDVendaitem implements Serializable {
     @JoinColumn(name = "CODIGO_VENDA", referencedColumnName = "CODIGO_VENDA")
     @ManyToOne
     private BDVendas codigoVenda;
-
+    
     public BDVendaitem() {
     }
 
@@ -111,7 +111,7 @@ public class BDVendaitem implements Serializable {
 
     @Override
     public String toString() {
-        return String.valueOf(quantidade);
+        return "Produto: "+getCodigoProduto().getNome()+", "+String.valueOf(quantidade);
     }
  
 }

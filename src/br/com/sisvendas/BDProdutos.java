@@ -113,13 +113,6 @@ public class BDProdutos implements Serializable {
         return true;
     }
 
-    @Override
-    public String toString() {
-        //return ""+nome+" ("+codigoFornecedor.getNome()+")"; //Formatação p imprimir no comboBox
-        return nome;
-    }
-
-
     @XmlTransient
     public Collection<BDVendaitem> getVendaitemCollection() {
         return vendaitemCollection;
@@ -143,6 +136,12 @@ public class BDProdutos implements Serializable {
 
     public void setEstoque(int estoque) {
         this.estoque = estoque;
+    }
+    
+    @Override
+    public String toString() {
+        //return ""+nome+" ("+codigoFornecedor.getNome()+")"; //Formatação p imprimir no comboBox
+        return nome;
     }
  
 }

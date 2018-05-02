@@ -36,15 +36,14 @@
             <Text layoutX="420.0" layoutY="447.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UF:" />
             <TextField fx:id="txtClienteCEP" layoutX="470.0" layoutY="450.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="470.0" />
             <Text layoutX="470.0" layoutY="447.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CEP:" />
-            <TextField fx:id="txtClienteTelefone" layoutX="630.0" layoutY="450.0" prefHeight="25.0" prefWidth="160.0" AnchorPane.leftAnchor="630.0" />
+            <TextField fx:id="txtClienteTelefone" layoutX="630.0" layoutY="450.0" onKeyReleased="#tfClienteTelefone" prefHeight="25.0" prefWidth="160.0" AnchorPane.leftAnchor="630.0" />
             <Text layoutX="629.0" layoutY="447.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Telefone:" />
             <TextField fx:id="txtClienteBairro" layoutX="470.0" layoutY="399.0" prefHeight="25.0" prefWidth="320.0" AnchorPane.leftAnchor="470.0" />
             <Text layoutX="470.0" layoutY="396.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bairro:" />
             <Button fx:id="btnNovoCliente" layoutX="49.0" layoutY="488.0" mnemonicParsing="false" onAction="#btnClienteNovo" prefHeight="40.0" prefWidth="90.0" text="Novo" AnchorPane.leftAnchor="90.0" />
-            <Button fx:id="btnFecharCliente" layoutX="637.0" layoutY="488.0" mnemonicParsing="false" onAction="#btnClienteFechar" prefHeight="40.0" prefWidth="90.0" text="Fechar" AnchorPane.rightAnchor="90.0" />
             <Button layoutX="448.0" layoutY="488.0" mnemonicParsing="false" onAction="#btnClienteExcluir" prefHeight="40.0" prefWidth="90.0" text="Excluir" AnchorPane.rightAnchor="230.0" />
             <Button layoutX="210.0" layoutY="488.0" mnemonicParsing="false" onAction="#btnClienteAlterar" prefHeight="40.0" prefWidth="90.0" text="Alterar" AnchorPane.leftAnchor="230.0" />
-            <Button fx:id="btnSalvarCliente" layoutX="365.0" layoutY="540.0" mnemonicParsing="false" onAction="#btnClienteSalvar" prefHeight="40.0" prefWidth="90.0" text="Salvar" AnchorPane.leftAnchor="350.0" />
+            <Button fx:id="btnSalvarCliente" layoutX="640.0" layoutY="488.0" mnemonicParsing="false" onAction="#btnClienteSalvar" prefHeight="40.0" prefWidth="90.0" text="Salvar" AnchorPane.leftAnchor="640.0" />
             <Text layoutX="10.0" layoutY="396.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Endereço: " />
             <Text layoutX="10.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome:" />
          </children>

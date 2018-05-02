@@ -2,7 +2,6 @@ package br.com.sisvendas;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -14,13 +13,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(name = "VENDAS")
@@ -28,11 +25,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "BDVendas.findAll", query = "SELECT b FROM BDVendas b")
     , @NamedQuery(name = "BDVendas.findByCodigoVenda", query = "SELECT b FROM BDVendas b WHERE b.codigoVenda = :codigoVenda")
-    , @NamedQuery(name = "BDVendas.findByDataVenda", query = "SELECT b FROM BDVendas b WHERE b.dataVenda = :dataVenda")})
+    , @NamedQuery(name = "BDVendas.findByDataVenda", query = "SELECT b FROM BDVendas b WHERE b.dataVenda = :dataVenda")
+    , @NamedQuery(name = "BDVendas.findByValorTotal", query = "SELECT b FROM BDVendas b WHERE b.valorTotal = :valorTotal")})
 public class BDVendas implements Serializable {
-
-    @OneToMany(mappedBy = "codigoVenda")
-    private Collection<BDVendaitem> vendaitemCollection;
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -43,8 +38,10 @@ public class BDVendas implements Serializable {
     @Column(name = "CODIGO_VENDA")
     private BigDecimal codigoVenda;
     @Column(name = "DATA_VENDA")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date dataVenda;
+    @Column(name = "VALOR_TOTAL")
+    private Float valorTotal;
     @JoinColumn(name = "CODIGO_CLIENTE", referencedColumnName = "CODIGO_CLIENTE")
     @ManyToOne
     private BDClientes codigoCliente;
@@ -60,6 +57,8 @@ public class BDVendas implements Serializable {
         this.dataVenda = dataVenda;
         this.codigoCliente = codigoCliente;
     }
+    
+    
 
     public BigDecimal getCodigoVenda() {
         return codigoVenda;
@@ -75,6 +74,14 @@ public class BDVendas implements Serializable {
 
     public void setDataVenda(Date dataVenda) {
         this.dataVenda = dataVenda;
+    }
+
+    public Float getValorTotal() {
+        return valorTotal;
+    }
+
+    public void setValorTotal(Float valorTotal) {
+        this.valorTotal = valorTotal;
     }
 
     public BDClientes getCodigoCliente() {
@@ -107,16 +114,7 @@ public class BDVendas implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.sisvendas.BDVendas[ codigoVenda=" + codigoVenda + " ]";
-    }
-
-    @XmlTransient
-    public Collection<BDVendaitem> getVendaitemCollection() {
-        return vendaitemCollection;
-    }
-
-    public void setVendaitemCollection(Collection<BDVendaitem> vendaitemCollection) {
-        this.vendaitemCollection = vendaitemCollection;
+        return codigoVenda.toString();
     }
  
 }

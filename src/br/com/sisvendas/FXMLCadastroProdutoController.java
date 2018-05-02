@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -23,7 +25,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.KeyEvent;
+import javafx.util.Callback;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
@@ -73,7 +76,7 @@ public class FXMLCadastroProdutoController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         carregarFornecedoresBox();
         carregarTabelaProduto();  
-        btnSalvarProduto.setDisable(true);
+        btnSalvarProduto.setDisable(true);  
     } 
     
     @FXML
@@ -93,7 +96,9 @@ public class FXMLCadastroProdutoController implements Initializable {
             //não deixar o Entity manager aberto sem transação
             String nome= txtProdutoNome.getText();
             int estoque= Integer.parseInt(txtProdutoEstoque.getText());
-            float valor= Float.parseFloat(txtProdutoValor.getText());
+            String k= txtProdutoValor.getText().replaceAll("\\.",""); //converte a formatação de numero BR para USA
+            String v= k.replaceAll(",",".");
+            float valor= Float.parseFloat(v);
             String fornecNome= selecionarItemComboBoxProduto();
             BDFornecedores f = null;
             //Obter o objeto Fornecedor correto da lista, atraves da string do nome
@@ -130,7 +135,7 @@ public class FXMLCadastroProdutoController implements Initializable {
     void btnProdutoAlterar(ActionEvent event) {
         BDProdutos produtoAlterar = clicarProdutoTabela();
         txtProdutoNome.setText(produtoAlterar.getNome());
-        txtProdutoValor.setText(Float.toString(produtoAlterar.getValor()));
+        txtProdutoValor.setText(Float.toString(produtoAlterar.getValor()).replace(".", ",")); //converte formatação USA para BR
         txtProdutoEstoque.setText(Integer.toString(produtoAlterar.getEstoque()));
         btnSalvarProduto.setDisable(false);
     }
@@ -139,9 +144,12 @@ public class FXMLCadastroProdutoController implements Initializable {
     private void btnProdutoSalvar(ActionEvent event) {
         String nome= txtProdutoNome.getText();
         int estoque= Integer.parseInt(txtProdutoEstoque.getText());
-        float valor= Float.parseFloat(txtProdutoValor.getText());
+        String k= txtProdutoValor.getText().replaceAll("\\.",""); //converte a formatação de numero BR para USA
+        String v= k.replaceAll(",",".");
+        float valor= Float.parseFloat(v);
         String fornecNome= selecionarItemComboBoxProduto();
         BDFornecedores f = null;
+        System.out.println(valor);
         //Obter o objeto Fornecedor correto da lista, atraves da string do nome
         for( BDFornecedores t: carregarFornecedoresBox()){
             if(t.getNome().equals(fornecNome)){
@@ -205,7 +213,13 @@ public class FXMLCadastroProdutoController implements Initializable {
         tabelaProduto.getColumns().get(0).setVisible(true);//- alterar 
         tabelaProdutoFornecedor.setCellValueFactory(new PropertyValueFactory<BDProdutos,BDProdutos>("codigoFornecedor"));
         tabelaProdutoNome.setCellValueFactory(new PropertyValueFactory<BDProdutos,String>("nome"));
-        tabelaProdutoValor.setCellValueFactory(new PropertyValueFactory<BDProdutos,String>("valor"));
+        tabelaProdutoValor.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<BDProdutos, String>, ObservableValue<String>>() {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<BDProdutos,String> param) {  
+                String t = "R$"+String.format("%.2f",param.getValue().getValor());//converte em string e formata o preço da forma adequada
+                return new ReadOnlyObjectWrapper<>(t); 
+            }
+        });
+                
         tabelaProdutoEstoque.setCellValueFactory(new PropertyValueFactory<BDProdutos,String>("estoque"));
         
         TypedQuery<BDProdutos> query= em.createQuery("SELECT b FROM BDProdutos b",BDProdutos.class);
@@ -232,4 +246,10 @@ public class FXMLCadastroProdutoController implements Initializable {
         txtProdutoEstoque.clear();
         txtProdutoValor.clear();
     }
+
+    @FXML
+    private void tfValor(KeyEvent event)  {
+        MaskFieldUtil.monetaryField(txtProdutoValor);    
+    }
+        
 }

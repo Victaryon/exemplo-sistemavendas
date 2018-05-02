@@ -1,5 +1,8 @@
 package br.com.sisvendas; 
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import javafx.scene.control.Alert;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -16,7 +19,16 @@ public  class FabricaEntityManager {
 					try {
 						emf = Persistence.createEntityManagerFactory("SistemaVendas");
 					} catch (RuntimeException ex) {
-						Logger.getLogger(FabricaEntityManager.class).fatal("não foi possível carregar a unidade de persistencia", ex);
+						StringWriter stackTraceWriter = new StringWriter();
+                                                ex.printStackTrace(new PrintWriter(stackTraceWriter));
+                                                Alert alert= new Alert(Alert.AlertType.ERROR);
+                                                alert.setTitle("ERRO!");
+                                                //alert.setHeaderText("Cabeçalho");
+                                                alert.setContentText("Não foi possivel connectar ao Banco de Dados \n"
+                                                        +"Falha ao carregar unidade de Persistencia \n\n"+ex.toString());
+                                                alert.show();
+                                                
+                                                Logger.getLogger(FabricaEntityManager.class).fatal("não foi possível carregar a unidade de persistencia", ex);
 						throw ex;
 					}
 			}
@@ -27,9 +39,19 @@ public  class FabricaEntityManager {
 	public static EntityManager createEm() { //método que usa uma transação pra cada parte do programa
 		try {
 			return getEmf().createEntityManager();
-		} catch (RuntimeException ex) {
-			Logger.getLogger(FabricaEntityManager.class).error("falha ao criar EntityManager", ex);
-			throw ex;
+		} 
+                catch (RuntimeException ex) {
+                    StringWriter stackTraceWriter = new StringWriter(); 
+                    ex.printStackTrace(new PrintWriter(stackTraceWriter));
+                    Alert alert= new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("ERRO!");
+                    alert.setContentText("Não foi possivel connectar ao Banco de Dados \n"
+                            + "Falha ao criar o EntityManager\n\n"+ex.toString());
+                    //alert.setContentText(ex.toString() + "\n" + stackTraceWriter.toString());//Faz com que todo erro seja impresso na caixa de Dialogo
+                    alert.show();
+                    
+                    Logger.getLogger(FabricaEntityManager.class).error("falha ao criar EntityManager", ex);
+                    throw ex;
 		}
         }
         

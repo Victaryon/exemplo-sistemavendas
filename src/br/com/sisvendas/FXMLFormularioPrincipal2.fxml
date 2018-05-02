@@ -33,10 +33,9 @@
           </Menu>
             <Menu fx:id="mnuRelatorios" mnemonicParsing="false" text="Relatórios">
               <items>
-                <MenuItem fx:id="mnuRelatorioClientes" mnemonicParsing="false" text="Clientes" />
-                  <MenuItem fx:id="mnuRelatorioProdutos" mnemonicParsing="false" text="Produtos" />
-                  <MenuItem fx:id="mnuRelatorioFornecedores" mnemonicParsing="false" text="Fornecedores" />
-                  <MenuItem fx:id="mnuRelatorioVendas" mnemonicParsing="false" text="Vendas" />
+                <MenuItem fx:id="mnuRelatorioClientes" mnemonicParsing="false" onAction="#mnuRelatorioClientes" text="Clientes" />
+                  <MenuItem fx:id="mnuRelatorioProdutos" mnemonicParsing="false" onAction="#mnuProdutosRelatorio" text="Produtos" />
+                  <MenuItem fx:id="mnuRelatorioFornecedores" mnemonicParsing="false" onAction="#mnuFornecedoresRelatorio" text="Fornecedores" />
               </items>
             </Menu>
         </menus>

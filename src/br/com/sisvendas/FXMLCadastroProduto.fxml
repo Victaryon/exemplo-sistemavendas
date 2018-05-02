@@ -29,17 +29,17 @@
             <Text layoutX="14.0" layoutY="348.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome:" />
             <TextField fx:id="txtProdutoNome" layoutX="10.0" layoutY="351.0" prefHeight="25.0" prefWidth="599.0" AnchorPane.leftAnchor="10.0" />
             <Text layoutX="14.0" layoutY="395.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fornecedor:" />
-            <TextField fx:id="txtProdutoEstoque" layoutX="620.0" layoutY="399.0" prefHeight="25.0" prefWidth="160.0" AnchorPane.leftAnchor="620.0" />
-            <Text layoutX="623.0" layoutY="395.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estoque:" />
-            <Text layoutX="623.0" layoutY="348.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Valor:" />
+            <TextField fx:id="txtProdutoEstoque" layoutX="620.0" layoutY="399.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.rightAnchor="20.0" />
+            <Text layoutX="630.0" layoutY="395.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estoque:" />
+            <Text layoutX="630.0" layoutY="348.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Valor:" />
             <Button layoutX="90.0" layoutY="461.0" mnemonicParsing="false" onAction="#btnProdutoNovo" prefHeight="40.0" prefWidth="90.0" text="Novo" AnchorPane.leftAnchor="90.0" />
-            <Button layoutX="620.0" layoutY="461.0" mnemonicParsing="false" onAction="#btnProdutoFechar" prefHeight="40.0" prefWidth="90.0" text="Fechar" AnchorPane.rightAnchor="90.0" />
             <Button layoutX="480.0" layoutY="461.0" mnemonicParsing="false" onAction="#btnProdutoAlterar" prefHeight="40.0" prefWidth="90.0" text="Alterar" AnchorPane.rightAnchor="230.0" />
             <Button layoutX="230.0" layoutY="461.0" mnemonicParsing="false" onAction="#btnProdutoExcluir" prefHeight="40.0" prefWidth="90.0" text="Excluir" AnchorPane.leftAnchor="230.0" />
-            <TextField fx:id="txtProdutoValor" layoutX="620.0" layoutY="351.0" prefHeight="25.0" prefWidth="160.0" />
+            <TextField fx:id="txtProdutoValor" layoutX="632.0" layoutY="351.0" onKeyReleased="#tfValor" prefHeight="25.0" prefWidth="150.0" AnchorPane.rightAnchor="20.0" />
             <ComboBox fx:id="comboBxtProdutoFornecedor" layoutX="10.0" layoutY="399.0" onAction="#selecionarItemComboBoxProduto" onMouseClicked="#selecionarItemComboBoxProduto" prefHeight="25.0" prefWidth="600.0" promptText="Selecione o fornecedor" />
-            <Button fx:id="btnSalvarProduto" layoutX="355.0" layoutY="518.0" mnemonicParsing="false" onAction="#btnProdutoSalvar" prefHeight="40.0" prefWidth="90.0" text="Salvar" />
+            <Button fx:id="btnSalvarProduto" layoutX="630.0" layoutY="461.0" mnemonicParsing="false" onAction="#btnProdutoSalvar" prefHeight="40.0" prefWidth="90.0" text="Salvar" />
             <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Produto:" />
+            <Text layoutX="616.0" layoutY="368.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R$" />
          </children>
          <opaqueInsets>
             <Insets top="50.0" />

@@ -171,11 +171,6 @@ public class BDClientes implements Serializable {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return nome;
-    }
-
     @XmlTransient
     public Collection<BDVendas> getBDVendasCollection() {
         return bDVendasCollection;
@@ -183,6 +178,11 @@ public class BDClientes implements Serializable {
 
     public void setBDVendasCollection(Collection<BDVendas> bDVendasCollection) {
         this.bDVendasCollection = bDVendasCollection;
+    }
+    
+    @Override
+    public String toString() {
+        return nome;
     }
  
 }

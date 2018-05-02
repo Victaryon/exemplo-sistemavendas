@@ -11,22 +11,24 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button layoutX="458.0" layoutY="78.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Pesquisar" AnchorPane.rightAnchor="254.0" />
-            <TableView layoutX="5.0" layoutY="138.0" prefHeight="272.0" prefWidth="625.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="165.0">
+            <Button fx:id="btnPesquisar" layoutX="458.0" layoutY="78.0" mnemonicParsing="false" onAction="#btnPesquisarTabela" prefHeight="25.0" prefWidth="88.0" text="Pesquisar" AnchorPane.rightAnchor="254.0" />
+            <TableView fx:id="tabelaVendaConsultar" layoutX="5.0" layoutY="138.0" prefHeight="335.0" prefWidth="780.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="Titulo 1" />
-                  <TableColumn prefWidth="75.0" text="Titulo 2" />
-                  <TableColumn prefWidth="75.0" text="Titulo 3" />
-                <TableColumn prefWidth="75.0" text="Titulo 4" />
+                <TableColumn fx:id="tabelaConsultarCodigo" prefWidth="75.0" text="Código Venda" />
+                  <TableColumn fx:id="tabelaConsultarCliente" prefWidth="75.0" text="Cliente" />
+                  <TableColumn fx:id="tabelaConsultarProduto" prefWidth="75.0" text="Produto" />
+                <TableColumn fx:id="tabelaConsultarData" prefWidth="75.0" text="Data" />
+                  <TableColumn fx:id="tabelaConsultarValor" prefWidth="75.0" text="Valor Total" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <TextField layoutX="140.0" layoutY="78.0" prefHeight="25.0" prefWidth="119.0" />
-            <TextField layoutX="290.0" layoutY="78.0" prefHeight="25.0" prefWidth="119.0" />
+            <TextField fx:id="txtDataIni" layoutX="140.0" layoutY="78.0" onKeyReleased="#tfDataInicio" prefHeight="25.0" prefWidth="119.0" />
+            <TextField fx:id="txtDataFim" layoutX="290.0" layoutY="78.0" onKeyReleased="#tfDataFim" prefHeight="25.0" prefWidth="119.0" />
             <Text layoutX="140.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data Inicio:" />
             <Text layoutX="290.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data Fim:" />
+            <Button fx:id="btnImprimirRelatorio" layoutX="340.0" layoutY="505.0" mnemonicParsing="false" onAction="#btnRelatorioImprimir" prefHeight="60.0" prefWidth="120.0" text="Imprimir" />
          </children>
       </AnchorPane>
    </center>
